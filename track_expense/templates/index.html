@@ -57,9 +57,9 @@
             <span class="font-bold">${{ expense.amount|intcomma }}</span>
             <span class="font-bold">{{ expense.date }}</span>
             <span class="font-bold">{{ expense.category }}</span>
-             <!--<span class="pl-24"><a href="{% url 'edit' expense.id %}">
+             <span class="pl-24"><a href="{% url 'edit' expense.id %}">
                 <img class="h-5" src="{% static 'app/images/edit.png' %}" alt="">
-             </a></span>-->
+             </a></span>
             <span class="pl-22">
                 <form method="post" action="{% url 'delete' expense.id %}">
                     {% csrf_token %}

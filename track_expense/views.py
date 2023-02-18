@@ -39,3 +39,21 @@ def index(request):
     
     expense_form = ExpenseForm()
     return render(request,'index.html',{'expense_form':expense_form,'expenses':expenses,'total_expenses':total_expenses,'yearly_sum':yearly_sum,'weekly_sum':weekly_sum,'monthly_sum':monthly_sum,'daily_sums':daily_sums,'categorical_sums':categorical_sums})
+
+def edit(request,id):
+    expense = Expense.objects.get(id=id)
+    expense_form = ExpenseForm(instance=expense)
+    if request.method =="POST":
+        expense = Expense.objects.get(id=id)
+        form = ExpenseForm(request.POST,instance=expense)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        
+    return render(request,'myapp/edit.html',{'expense_form':expense_form})
+
+def delete(request,id):
+    if request.method =='POST' and 'delete' in request.POST:
+        expense = Expense.objects.get(id=id)
+        expense.delete()
+    return redirect('index')
