@@ -93,3 +93,6 @@ def register(request):
         expense_form=ExpenseForm()
         user_form=UserForm()
         return render(request,'index.html',{'user_form':user_form,'expense_form':expense_form,'expenses':expenses,'total_expenses':total_expenses,'yearly_sum':yearly_sum,'weekly_sum':weekly_sum,'monthly_sum':monthly_sum,'daily_sums':daily_sums,'categorical_sums':categorical_sums})
+
+def login(request):
+    return render(request,'login.html')
