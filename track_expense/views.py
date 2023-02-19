@@ -3,6 +3,7 @@ from .forms import ExpenseForm
 from .models import Expense
 import datetime
 from django.db.models import Sum
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -57,3 +58,7 @@ def delete(request,id):
         expense = Expense.objects.get(id=id)
         expense.delete()
     return redirect('index')
+
+def register(request):
+    # return HttpResponse('this is aditya')
+    return render(request,'register.html')
