@@ -18,16 +18,17 @@
                 <span class="self-center text-xl font-semibold">Expense Tracker</span>
             </a>
 
-            
-            <div class="toggle-btn" id="btn">
-                <span>Dark</span>
-                <img src="../static/app/images/moon.png" alt="">
+            <div class="flex flex-wrap justify-right">
+                <div class="toggle-btn" id="btn" style="margin-right: 10px;">
+                    <span>Dark</span>
+                    <img src="../static/app/images/moon.png" alt="">
+                </div>
+                <div class="toggle-btn1" id="btn">
+                    <a href="{% url 'login' %}">Log Out</a>
+                </div>
             </div>
-
+            
         </div>
-        
-
-
     </nav>
     <script>
         let btn = document.getElementById('btn');
