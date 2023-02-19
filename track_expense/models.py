@@ -9,3 +9,10 @@ class Expense(models.Model):
     
     def __str__(self):
         return self.name
+
+class User(models.Model):
+    name=models.CharField(max_length=100)
+    gmail=models.CharField(max_length=100)
+    password=models.CharField(max_length=100)
+    phone=models.IntegerField()
+    
