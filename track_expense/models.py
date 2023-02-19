@@ -16,3 +16,8 @@ class User(models.Model):
     password=models.CharField(max_length=100)
     phone=models.IntegerField()
     
+    def GetUserByEmail(gmail):
+        try:
+            return User.objects.get(gmail=gmail)
+        except:
+            return False

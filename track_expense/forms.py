@@ -10,5 +10,10 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('name','gmail','password','phone')
+
+class LoginForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('gmail','password')
         
     

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .forms import ExpenseForm,UserForm
-from .models import Expense
+from .forms import ExpenseForm, LoginForm,UserForm
+from .models import Expense,User
 import datetime
 from django.db.models import Sum
 from django.http import HttpResponse
@@ -95,4 +95,49 @@ def register(request):
         return render(request,'index.html',{'user_form':user_form,'expense_form':expense_form,'expenses':expenses,'total_expenses':total_expenses,'yearly_sum':yearly_sum,'weekly_sum':weekly_sum,'monthly_sum':monthly_sum,'daily_sums':daily_sums,'categorical_sums':categorical_sums})
 
 def login(request):
-    return render(request,'login.html')
+    if request.method=="GET":
+        login_form=LoginForm()
+        return render(request,'login.html',{'login_form':login_form})
+    else:
+        email = request.POST.get('gmail')
+        password = request.POST.get('password')
+        login_form=LoginForm()
+        print(email)
+        user=User.GetUserByEmail(email)
+        print(user)
+        if user:
+            if user.password==password:
+              expenses = Expense.objects.all()
+              total_expenses = expenses.aggregate(Sum('amount'))
+
+              #Logic to calculate 365 days expenses
+              last_year = datetime.date.today() - datetime.timedelta(days=365)
+              data = Expense.objects.filter(date__gt=last_year)
+              yearly_sum = data.aggregate(Sum('amount'))
+    
+              #Logic to calculate 30 days expenses
+              last_month = datetime.date.today() - datetime.timedelta(days=30)
+              data = Expense.objects.filter(date__gt=last_month)
+              monthly_sum = data.aggregate(Sum('amount'))
+    
+              #Logic to calculate 7 days expenses
+              last_week = datetime.date.today() - datetime.timedelta(days=7)
+              data = Expense.objects.filter(date__gt=last_week)
+              weekly_sum = data.aggregate(Sum('amount'))
+    
+              daily_sums = Expense.objects.filter().values('date').order_by('date').annotate(sum=Sum('amount'))
+    
+    
+              categorical_sums = Expense.objects.filter().values('category').order_by('category').annotate(sum=Sum('amount'))
+              expense_form=ExpenseForm()
+              user_form=UserForm()
+              return render(request,'index.html',{'user_form':user_form,'expense_form':expense_form,'expenses':expenses,'total_expenses':total_expenses,'yearly_sum':yearly_sum,'weekly_sum':weekly_sum,'monthly_sum':monthly_sum,'daily_sums':daily_sums,'categorical_sums':categorical_sums})
+            else:
+                error="Wrong Password"
+                return render(request,'login.html',{'error':error,'login_form':login_form})
+        else:
+            error="User Doesn't exists"
+            return render(request,'login.html',{'error':error,'login_form':login_form})
+
+
+    return render(request,'login.html',)

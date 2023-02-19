@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
 {% block body %}
 
 
@@ -8,18 +10,19 @@
     <div class="mx-10">
         <div class="mb-5" style="display: flex; justify-content: end; ">
             <label>Email id:</label>
-            <input type="text" name="id" class="border">
-            <!-- {{ user_form.gmail }} -->
+            
+             {{ login_form.gmail }} 
          </div>
     </div>
     
     <div class="mx-10">
         <div class="mb-5" style="display: flex; justify-items: end;">
              <label>Password:</label>
-             <input type="password" name="pass" class="border">
-             <!-- {{ user_form.password }} -->
+             
+              {{ login_form.password }}
          </div>
     </div>
+    {{error}}
     
     <div class="mx-10 mt-8">
         <button type="submit" class="bg-green-500 px-5 py-2 rounded-lg text-white font-bold">Log In</button>
